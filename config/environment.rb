@@ -1,4 +1,6 @@
 require 'bundler/setup'
 Bundler.require
 
-require File.expand_path('../application', __FILE__)
+require_relative '../lib/board.rb'
+require_relative '../lib/player.rb'
+require_relative '../lib/tictactoe.rb'
