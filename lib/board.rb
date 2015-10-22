@@ -7,8 +7,14 @@ class Board
 
   def draw_board
     @board.each.with_index do |row, index|
-      index == 2 ? draw_row(row) : draw_row(row); puts("---+---+---")
+      if index == 2
+        draw_row(row)
+      else
+        draw_row(row)
+        puts("---+---+---")
+      end
     end
+    puts "\n"
   end
 
   def update_space(space, player)
@@ -37,19 +43,19 @@ class Board
   end
 
   def horizontal_win
-    @board[0].uniq.length == 1 || @board[1].uniq.length == 1 || @board[2].uniq.length == 1
+    (0..2).map { |n| @board[n].uniq.length == 1 }.include?(true)
   end
 
   def vertical_win
-    (0..2).each do |i|
-      return true if @board[0][i] == @board[1][i] && @board[0][i] == @board[2][i]
-    end
-    false
+    vert_array = (0..2).map { |n| @board.map { |row| row[n] } }
+    (0..2).map { |n| vert_array[n].uniq.length == 1 }.include?(true)
   end
 
   def diagonal_win
-    (@board[0][0] == @board[1][1] && @board[1][1] == @board[2][2]) ||
-    (@board[0][2] == @board[1][1] && @board[1][1] == @board[2][0])
+    diag1 = (0..2).map { |n| @board[n][n] }
+    diag2 = (0..2).map { |n| @board[-n-1][n] }
+    diag_array = [diag1, diag2]
+    (0..1).map { |n| diag_array[n].uniq.length == 1 }.include?(true)
   end
 
 end

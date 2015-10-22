@@ -1,7 +1,8 @@
 class TicTacToe
 
   def play
-    intro
+    puts "\e[H\e[2J"
+    puts "Let's play Tic Tac Toe!"
     player_name
     choice_of_piece
     @player = Player.new(@player_name, @player_piece)
@@ -16,10 +17,6 @@ class TicTacToe
     ending
   end
 
-  def intro
-    puts "Let's play Tic Tac Toe!"
-  end
-
   def player_name
     puts "I'm SkyNet. What is your name?"
     name = gets.chomp
@@ -32,7 +29,6 @@ class TicTacToe
     while input != "x" && input != "o"
       puts "You must choose X or O"
       input = gets.chomp.downcase
-      binding.pry
     end
     if input == 'x'
       @player_piece = 'x'
@@ -49,6 +45,7 @@ class TicTacToe
   end
 
   def ending
+    puts "\e[H\e[2J"
     @board.draw_board
     if win?
       puts "#{winner.name} won!"
@@ -78,26 +75,14 @@ class TicTacToe
   end
 
   def computer_move
-    if @turn1 == '5'
-      binding.pry
-      @board.update_space('1', @computer)
-    elsif @board.board[1][1] == '5'
-      binding.pry
-      @board.update_space('5', @computer)
-    else
-      random_move
-    end
-    @turn_num += 1
-  end
-
-  def random_move
     move = @board.free_spaces.sample
     @board.update_space(move, @computer)
     move
+    @turn_num += 1
   end
 
   def winner
-    @turn_num.even? ? @player : @computer
+    @turn_num.odd? ? @player : @computer
   end
 
   def win?
