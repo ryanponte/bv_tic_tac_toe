@@ -39,7 +39,6 @@ class TicTacToe
     end
   end
 
-
   def invalid
     puts "That move is invalid. You must select an open number."
   end
@@ -67,11 +66,11 @@ class TicTacToe
     @turn1 = @move if @turn_num == 0
     if @board.free_space?(@move)
       @board.update_space(@move, @player)
+      @turn_num += 1
     else
       invalid
       player_move
-    end
-    @turn_num += 1
+    end  
   end
 
   def computer_move
